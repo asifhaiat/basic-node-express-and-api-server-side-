@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express();
+
 const port = process.env.PORT || 5000;
+
 const cors = require("cors");
 app.use(cors());
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("This line shows from browser");
@@ -63,6 +67,15 @@ app.get("/book/:id", (req, res) => {
   res.send(book);
 });
 
+app.post("/addbook", (req, res) => {
+  console.log('request', req.body);
+  const addBook = req.body;
+  addBook.id = books.length + 1;
+  books.push(addBook);
+  res.send(addBook);
+  res.send("post method success");
+});
+
 const fruits = [
   {
     id: 1,
@@ -112,6 +125,11 @@ app.get("/fruit/:id", (req, res) => {
   res.send(fruit);
   // res.send("This is single object fruit");
 });
+
+app.post('/addfruit', (req, res) => {
+  console.log('request', req.body);
+  res.send('post methos success');
+})
 
 const techGaintCompanies = [
   {
@@ -201,6 +219,11 @@ app.get("/techGaintCompanies/:rank", (req, res) => {
   res.send(techGaintCompany);
 });
 
+app.post('/addcompany', (req, res) => {
+  console.log('request',req.body);
+  res.send('Post method success');
+})
+
 app.listen(port, () => {
-  console.log("Hello! feom server side Command Line");
+  console.log("Hello! from server side Command Line");
 });
